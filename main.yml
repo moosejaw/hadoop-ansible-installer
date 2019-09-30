@@ -1,0 +1,83 @@
+---
+- remote_user: root
+  tasks:
+      - name: Install build-essential and OpenJDK
+        apt:
+            name: "{{ pkgs }}"
+            state: latest
+            update_cache: yes
+        vars:
+          pkgs:
+            - build-essential
+            - default-jdk
+            - openssh-server
+
+      - name: Create hadoop user (hduser) and group (hadoop)
+        user:
+            name: hduser
+            group: hadoop
+            generate_ssh_key: yes
+
+      - name: Copy the SSH key into authorized_keys
+        command: cat /home/hduser/.ssh/id_rsa.pub >> /home/hduser/.ssh/authorized_keys
+
+      - name: Copy the IPv6 configuration into /etc/sysctl.conf
+        lineinfile:
+            path: /etc/sysct.conf
+            line: "{{ lines_to_add }}"
+        vars:
+            lines_to_add:
+              - net.ipv6.conf.all.disable_ipv6 =1
+              - net.ipv6.conf.default.disable_ipv6 =1
+              - net.ipv6.conf.lo.disable_ipv6 =1
+
+      - name: Get Hadoop 3.1.2 binary
+        get_url:
+            url: http://apache.mirror.anlx.net/hadoop/common/hadoop-3.1.2/hadoop-3.1.2.tar.gz
+            dest: /home/hduser/hadoop-3.1.2.tar.gz
+
+      - name: Extract Hadoop tarfile
+        unarchive:
+            src: /home/hduser/hadoop-3.1.2.tar.gz
+            dest: /home/hduser/hadoop
+
+      - name: Move Hadoop folder to /usr/local
+        command: mv /home/hduser/hadoop/hadoop-3.1.2 /usr/local/hadoop
+
+      - name: Set owner of Hadoop files to hduser
+        file:
+            path: /usr/local/hadoop
+            owner: hduser
+            group: hadoop
+            recurse: yes
+
+      - name: Insert JAVA_HOME variable into hadoop-env
+        lineinfile:
+            path: /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+            line: "{{ lines_to_add }}"
+        vars:
+            lines_to_add:
+              - JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+      - name: Make area to become the HDFS
+        command: mkdir -p /app/hadoop/tmp
+
+      - name: Set owner of HDFS directory to hduser and set permissions
+        file:
+            path: /app/hadoop/tmp
+            owner: hduser
+            group: hadoop
+            recurse: yes
+            mode: 0750
+
+      - name: Copy Hadoop config files
+        copy:
+            src: "{{ config_files }}"
+            dest: /app/hadoop/etc/hadoop/
+            owner: hduser
+            group: hadoop
+        vars:
+          config_files:
+              - core-site.xml
+              - hdfs-site.xml
+              - mapred-site.xml
