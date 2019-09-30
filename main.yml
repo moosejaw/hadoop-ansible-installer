@@ -31,11 +31,11 @@
         command: touch /home/hduser/.ssh/authorized_keys
 
       - name: Copy the SSH key into authorized_keys
-        command: cat /home/hduser/.ssh/id_rsa.pub >> /home/hduser/.ssh/authorized_keys
+        command: cp /home/hduser/.ssh/id_rsa.pub /home/hduser/.ssh/authorized_keys
 
       - name: Copy the IPv6 configuration into /etc/sysctl.conf
         lineinfile:
-            path: /etc/sysct.conf
+            path: /etc/sysctl.conf
             line: "{{ lines_to_add }}"
         vars:
             lines_to_add:
@@ -47,6 +47,9 @@
         get_url:
             url: http://apache.mirror.anlx.net/hadoop/common/hadoop-3.1.2/hadoop-3.1.2.tar.gz
             dest: /home/hduser/hadoop-3.1.2.tar.gz
+
+      - name: Make Hadoop folder
+        command: mkdir /home/hduser/hadoop
 
       - name: Extract Hadoop tarfile
         unarchive:
@@ -71,12 +74,10 @@
             lines_to_add:
               - JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
-      - name: Make area to become the HDFS
-        command: mkdir -p /app/hadoop/tmp
-
-      - name: Set owner of HDFS directory to hduser and set permissions
+      - name: Make a HDFS directory and set owner to hduser and set permissions
         file:
             path: /app/hadoop/tmp
+            state: directory
             owner: hduser
             group: hadoop
             recurse: yes
