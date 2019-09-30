@@ -1,5 +1,6 @@
 ---
-- remote_user: root
+- hosts: main
+  remote_user: root
   tasks:
       - name: Install build-essential and OpenJDK
         apt:
