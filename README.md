@@ -17,7 +17,7 @@ This automatically installs the `ansible-playbook` binary for you. It is automat
 Next, clone this repository and set your working directory to the project folder.
 From there, run:
 ```bash
-ansible-playbook -i hosts -vv main.yml
+sudo ansible-playbook -i hosts -vv main.yml
 ```
 
 It should then automatically install Hadoop for you.
