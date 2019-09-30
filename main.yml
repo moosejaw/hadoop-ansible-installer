@@ -13,7 +13,12 @@
             - default-jdk
             - openssh-server
 
-      - name: Create hadoop user (hduser) and group (hadoop)
+      - name: Create hadoop group
+        group:
+            name: hadoop
+            state: present
+
+      - name: Create hduser user and add to hadoop group
         user:
             name: hduser
             group: hadoop
