@@ -83,14 +83,35 @@
             recurse: yes
             mode: 0750
 
-      - name: Copy Hadoop config files
+      # - name: Copy Hadoop config files
+      #   copy:
+      #       src: "{{ config_files }}"
+      #       dest: /app/hadoop/etc/hadoop/
+      #       owner: hduser
+      #       group: hadoop
+      #   vars:
+      #     config_files:
+      #         - core-site.xml
+      #         - hdfs-site.xml
+      #         - mapred-site.xml
+
+      - name: Copy core-site.xml file
         copy:
-            src: "{{ config_files }}"
+            src: core-site.xml
             dest: /app/hadoop/etc/hadoop/
             owner: hduser
             group: hadoop
-        vars:
-          config_files:
-              - core-site.xml
-              - hdfs-site.xml
-              - mapred-site.xml
+
+      - name: Copy hdfs-site.xml file
+        copy:
+            src: hdfs-site.xml
+            dest: /app/hadoop/etc/hadoop/
+            owner: hduser
+            group: hadoop
+
+      - name: Copy mapred-site.xml file
+        copy:
+            src: mapred-site.xml
+            dest: /app/hadoop/etc/hadoop/
+            owner: hduser
+            group: hadoop
