@@ -1,9 +1,9 @@
 # Ansible Playbook for installing Hadoop
-This is an Ansible Playbook for downloading and installing Apache Hadoop. It is a minimal install for the CT6045 module at the University of Gloucestershire. Don't use it in production.
+This is an Ansible Playbook for downloading and installing Apache Hadoop 3.1.2. It is an install for the CT6045 module at the University of Gloucestershire. Don't use it in production.
 
-Use this playbook on Ubuntu or another distribution of Linux which uses the apt package manager. You can adapt the playbook to use the generic package manager commands if you wish.
+Use this playbook on Ubuntu or another distribution of Linux which uses the apt package manager. You can adapt the playbook to use the generic package manager commands if you want to.
 
-This repository contains a hosts file for the purpose of running the script on localhost. You can modify this to distribute the install if you wish.
+This repository contains a hosts file for running the script on localhost. You can modify this to distribute the install if you want to.
 
 ## Running the Playbook
 You first need to get Ansible on your system. Assuming you're using a distro with the `apt` package manager, run:
