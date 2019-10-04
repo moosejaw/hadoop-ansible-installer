@@ -23,6 +23,11 @@
             name: hduser
             group: hadoop
 
+      - name: Create .ssh folder for hduser
+        file:
+            path: /home/hduser/.ssh
+            state: directory
+
       - name: Generate SSH key for hduser
         command: ssh-keygen -t rsa -P "" -f /home/hduser/.ssh/id_rsa.pub
 
