@@ -22,7 +22,13 @@
         user:
             name: hduser
             group: hadoop
-            generate_ssh_key: yes
+
+      - name: Generate SSH key for hduser
+        openssh_keypair:
+            owner: hduser
+            group: hadoop
+            state: present
+            path: /home/hduser/.ssh/id_rsa.pub
 
       - name: Copy the SSH key into authorized_keys
         command: mv /home/hduser/.ssh/id_rsa /home/hduser/.ssh/id_rsa.pub
@@ -31,7 +37,7 @@
         command: touch /home/hduser/.ssh/authorized_keys && chown hduser:hadoop /home/hduser/.ssh/authorized_keys
 
       - name: Copy the SSH key into authorized_keys
-        command: cp /home/hduser/.ssh/id_rsa.pub /home/hduser/.ssh/authorized_keys
+        command: cat /home/hduser/.ssh/id_rsa.pub >> /home/hduser/.ssh/authorized_keys
 
       - name: Copy IPv6 configuration (all) into /etc/sysctl.conf
         lineinfile:
