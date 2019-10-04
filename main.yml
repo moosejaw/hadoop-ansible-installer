@@ -69,10 +69,7 @@
       - name: Insert JAVA_HOME variable into hadoop-env
         lineinfile:
             path: /usr/local/hadoop/etc/hadoop/hadoop-env.sh
-            line: "{{ lines_to_add }}"
-        vars:
-            lines_to_add:
-              - JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+            line: export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
       - name: Make a HDFS directory and set owner to hduser and set permissions
         file:
