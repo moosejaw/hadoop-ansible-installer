@@ -33,7 +33,7 @@ Next, log in as hduser, generate a public key and add it to your authorized_keys
 ```bash
 su - hduser
 bash
-ssh-keygen -t rsa -P "" -f /home/hduser/.ssh/id_rsa.pub
+ssh-keygen -t rsa -P ""
 cat /home/hduser/.ssh/id_rsa.pub >> /home/hduser/.ssh/authorized_keys
 ```
 
