@@ -40,7 +40,7 @@
       - name: Copy the SSH key into authorized_keys
         authorized_key:
             user: hduser
-            key: /home/hduser/.ssh/id_rsa.pub
+            key: /home/hduser/.ssh/id_rsa.pub.pub
             state: present
 
       - name: Copy IPv6 configuration (all) into /etc/sysctl.conf
