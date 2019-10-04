@@ -29,4 +29,12 @@ sudo passwd hduser
 
 And then entering a UNIX password.
 
+Next, log in as hduser, generate a public key and add it to your authorized_keys
+```bash
+su - hduser
+bash
+ssh-keygen -t rsa -P "" -f /home/hduser/.ssh/id_rsa.pub
+cat /home/hduser/.ssh/id_rsa.pub >> /home/hduser/.ssh/authorized_keys
+```
+
 You will then need to restart your machine, then you can start Hadoop as `hduser`.

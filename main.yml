@@ -28,20 +28,20 @@
             path: /home/hduser/.ssh
             state: directory
 
-      - name: Generate SSH key for hduser
-        command: ssh-keygen -t rsa -P "" -f /home/hduser/.ssh/id_rsa.pub
-
-      # - name: Copy the SSH key into authorized_keys
-      #   command: mv /home/hduser/.ssh/id_rsa /home/hduser/.ssh/id_rsa.pub
-
+      # - name: Generate SSH key for hduser
+      #   command: ssh-keygen -t rsa -P "" -f /home/hduser/.ssh/id_rsa.pub
+      #
+      # # - name: Copy the SSH key into authorized_keys
+      # #   command: mv /home/hduser/.ssh/id_rsa /home/hduser/.ssh/id_rsa.pub
+      #
       - name: Touch authorized_keys file
         command: touch /home/hduser/.ssh/authorized_keys && chown hduser:hadoop /home/hduser/.ssh/authorized_keys
-
-      - name: Copy the SSH key into authorized_keys
-        authorized_key:
-            user: hduser
-            key: /home/hduser/.ssh/id_rsa.pub.pub
-            state: present
+      #
+      # - name: Copy the SSH key into authorized_keys
+      #   authorized_key:
+      #       user: hduser
+      #       key: /home/hduser/.ssh/id_rsa.pub.pub
+      #       state: present
 
       - name: Copy IPv6 configuration (all) into /etc/sysctl.conf
         lineinfile:
