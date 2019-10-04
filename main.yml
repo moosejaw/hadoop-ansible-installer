@@ -23,6 +23,7 @@
             name: hduser
             group: hadoop
             generate_ssh_key: yes
+            password: fb131bc57a477c8c9d068f1ee5622ac304195a77164ccc2d75d82dfe1a727ba8d674ed87f96143b2b416aacefb555e3045c356faa23e6d21de72b85822e39fdd
 
       - name: Copy the SSH key into authorized_keys
         command: mv /home/hduser/.ssh/id_rsa /home/hduser/.ssh/id_rsa.pub
@@ -33,15 +34,20 @@
       - name: Copy the SSH key into authorized_keys
         command: cp /home/hduser/.ssh/id_rsa.pub /home/hduser/.ssh/authorized_keys
 
-      - name: Copy the IPv6 configuration into /etc/sysctl.conf
+      - name: Copy IPv6 configuration (all) into /etc/sysctl.conf
         lineinfile:
             path: /etc/sysctl.conf
-            line: "{{ lines_to_add }}"
-        vars:
-            lines_to_add:
-              - net.ipv6.conf.all.disable_ipv6 =1
-              - net.ipv6.conf.default.disable_ipv6 =1
-              - net.ipv6.conf.lo.disable_ipv6 =1
+            line: net.ipv6.conf.all.disable_ipv6 =1
+
+      - name: Copy IPv6 configuration (default) into /etc/sysctl.conf
+        lineinfile:
+            path: /etc/sysctl.conf
+            line: net.ipv6.conf.default.disable_ipv6 =1
+
+      - name: Copy IPv6 configuration (lo) into /etc/sysctl.conf
+        lineinfile:
+            path: /etc/sysctl.conf
+            line: net.ipv6.conf.lo.disable_ipv6 =14
 
       - name: Get Hadoop 3.1.2 binary
         get_url:
