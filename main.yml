@@ -36,6 +36,13 @@
       #
       - name: Touch authorized_keys file
         command: touch /home/hduser/.ssh/authorized_keys && chown hduser:hadoop /home/hduser/.ssh/authorized_keys
+
+      - name: Create authorized_keys file
+        file:
+            path: /home/hduser/.ssh/authorized_keys
+            group: hadoop
+            owner: hduser
+            state: touch
       #
       # - name: Copy the SSH key into authorized_keys
       #   authorized_key:
