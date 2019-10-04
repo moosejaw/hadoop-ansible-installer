@@ -23,3 +23,5 @@ sudo ansible-playbook -i hosts -vv main.yml
 It should then automatically install Hadoop for you.
 
 You will then need to restart your machine, then you can start Hadoop as `hduser`.
+
+`hduser`'s password is `111`.
