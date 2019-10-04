@@ -47,7 +47,7 @@
       - name: Copy IPv6 configuration (lo) into /etc/sysctl.conf
         lineinfile:
             path: /etc/sysctl.conf
-            line: net.ipv6.conf.lo.disable_ipv6 =14
+            line: net.ipv6.conf.lo.disable_ipv6 =1
 
       - name: Get Hadoop 3.1.2 binary
         get_url:
