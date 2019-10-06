@@ -26,6 +26,8 @@
       - name: Create .ssh folder for hduser
         file:
             path: /home/hduser/.ssh
+            owner: hduser
+            group: hadoop
             state: directory
 
       # - name: Generate SSH key for hduser
@@ -34,8 +36,8 @@
       # # - name: Copy the SSH key into authorized_keys
       # #   command: mv /home/hduser/.ssh/id_rsa /home/hduser/.ssh/id_rsa.pub
       #
-      - name: Touch authorized_keys file
-        command: touch /home/hduser/.ssh/authorized_keys && chown hduser:hadoop /home/hduser/.ssh/authorized_keys
+      # - name: Touch authorized_keys file
+      #   command: touch /home/hduser/.ssh/authorized_keys && chown hduser:hadoop /home/hduser/.ssh/authorized_keys
 
       - name: Create authorized_keys file
         file:
@@ -117,20 +119,23 @@
       - name: Copy core-site.xml file
         copy:
             src: core-site.xml
-            dest: /app/hadoop/etc/hadoop/
+            dest: /app/hadoop/etc/hadoop/core-site.xml
+            force: yes
             owner: hduser
             group: hadoop
 
       - name: Copy hdfs-site.xml file
         copy:
             src: hdfs-site.xml
-            dest: /app/hadoop/etc/hadoop/
+            dest: /app/hadoop/etc/hadoop/hdfs-site.xml
+            force: yes
             owner: hduser
             group: hadoop
 
       - name: Copy mapred-site.xml file
         copy:
             src: mapred-site.xml
-            dest: /app/hadoop/etc/hadoop/
+            dest: /app/hadoop/etc/hadoop/mapred-site.xml
+            force: yes
             owner: hduser
             group: hadoop
