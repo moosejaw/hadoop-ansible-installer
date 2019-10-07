@@ -119,7 +119,7 @@
       - name: Copy core-site.xml file
         copy:
             src: core-site.xml
-            dest: /app/hadoop/etc/hadoop/core-site.xml
+            dest: /usr/local/hadoop/etc/hadoop/core-site.xml
             force: yes
             owner: hduser
             group: hadoop
@@ -127,7 +127,7 @@
       - name: Copy hdfs-site.xml file
         copy:
             src: hdfs-site.xml
-            dest: /app/hadoop/etc/hadoop/hdfs-site.xml
+            dest: /usr/local/hadoop/etc/hadoop/hdfs-site.xml
             force: yes
             owner: hduser
             group: hadoop
@@ -135,7 +135,7 @@
       - name: Copy mapred-site.xml file
         copy:
             src: mapred-site.xml
-            dest: /app/hadoop/etc/hadoop/mapred-site.xml
+            dest: /usr/local/hadoop/etc/hadoop/mapred-site.xml
             force: yes
             owner: hduser
             group: hadoop
